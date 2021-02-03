@@ -1,1 +1,1 @@
-# PenetratePJT_CarrotMap
+# CarrotMap 프로젝트
