@@ -1,123 +1,99 @@
-# CarrotMap 프로젝트
+# CarrotMap
 
-```
-package test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.StringTokenizer;
+CarrotMap은 주택 거래를 위한 웹서비스 입니다. 카카오 맵 API와 공공데이터포털의 오픈 API를 활용해 지역별 주택 실거래가과 주변 상권 정보를 함께 제공해 사용자의 의사결정을 도와줍니다.
 
-public class Solution {
+
+
+
+ 1. Housing & Commercial Info Service
+	 - 지역별 주택 실거래가 정보를 확인할 수 있습니다.
+	 - 지도를 통해 해당 지역의 상권 정보를 확인할 수 있습니다.
+	 - 해당 지역의 주택 가격 분포 정보를 확인할 수 있습니다.
+	 - 로드뷰 서비스를 제공합니다.
+	 - 주택 매물 등록 서비스를 제공합니다.
+
+ 2. Community Service
+	 - 사용자가 자유롭게 게시글을 등록할 수 있습니다.
+	 - 댓글과 대댓글, 좋아요와 싫어요 서비스를 제공합니다.
+
+3. Notice Service
+	- 관리자 페이지에서 등록한 공지사항 게시글을 확인할 수 있습니다.
+	- 댓글, 대댓글 서비스를 제공합니다.
+
+
+
+
+##  개발 환경
+
+> - IDE : STS(Spring Tool Suite3)
+> - Git Tools : Git Bash, Source Tree
+ >- OS : Window10
+ 
+ >- SpringBoot : 2.3.5.RELEASE
+ >- JDK 1.8
+ >- Maven
+ >- MySQL 8.0
+
+ 
+ 
+ 
+
+## 목차
+여기에 링크넣고싶은데!!
+
+## 시작하기
+아래의 방법을 따르면 프로젝트를 실행시킬 수 있습니다.
+
+
+### 시작하기에 앞서
+기본 개발환경을 세팅해주세요!
+
+### 1. Git Clone
+ ```
+ $ git clone https://github.com/sumin416/PenetratePJT_CarrotMap.git 
+ ```
+
+### 2. Import Project 
+
+ - [x] 소스코드를 STS에서 import 해주세요!
+
+
+
+### 3. Customizing
+
+ - [x] src/main/resources/application.properties 설정
+ 여기에 이미지 넣기
+ - [x] 데이터베이스  구축
+ [sql 파일 다운로드]()
+ 
+ 
+
 	
-	
-	
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int T = Integer.parseInt(br.readLine());
-		
-		for (int t = 1; t <= T; t++) {
-			List<int[]> MPos = new ArrayList<>();
-			List<int[]> EPos = new ArrayList<>();
-			int answer = 0;
-			
-			int N = Integer.parseInt(br.readLine());
-			for (int i = 0; i < N; i++) {
-				StringTokenizer st = new StringTokenizer(br.readLine()," ");
-				for (int j = 0; j < N; j++) {
-					int cur = Integer.parseInt(st.nextToken());
-					
-					if(cur == 0)	continue;
-					if(cur == 1) {
-						MPos.add(new int[] {i,j});
-						continue;
-					}
-					EPos.add(new int[] {i,j});
-				}
-			}
-			
-			int ESIZE = EPos.size();
-			int MSIZE = MPos.size();
-			
-			//사람마다 각 비상구까지 걸리는 이동시간 찾기
-			int[][] moveArr = new int[MSIZE][ESIZE];
-			
-			for (int i = 0; i < MSIZE; i++) {
-				int[] M = MPos.get(i);
-				for (int j = 0; j < ESIZE; j++) {
-					int[] E = EPos.get(j);
-					moveArr[i][j] = Math.abs(M[0]-E[0])+Math.abs(M[1]-E[1]);
-				}
-			}
-			
-			//비상구마다 큐 크기
-			int[] EWaitSize = new int[ESIZE];
-			
-			//int[] : 사람번호, 탈출가능시간, 탈출구번호
-			Queue<int[]> waitQueue = new LinkedList<>();
-			
-			//사람별 탈출 여부 0:이동중, 1:큐에서 대기중, 2:탈출 
-			int[] exitPeople = new int[ESIZE];
-			
-			while(true) {
-				
-				//큐 돌면서 현재 시간에 탈출 가능한 사람 큐에서 제거
-				int size = waitQueue.size();
-				for (int i = 0; i < size; i++) {
-					int[] cur = waitQueue.peek();
-					
-					if(cur[1] == answer) {
-						waitQueue.poll();
-						if(exitPeople[cur[0]]==2)	continue;
-						exitPeople[cur[0]] = 2;
-						EWaitSize[cur[2]]--;
-					}
-					else	break;
-				}
-				
-				//모든 사람이 탈출했다면 while루프 탈출
-				int cnt = 0;
-				for (int i = 0; i < exitPeople.length; i++) {
-					if(exitPeople[i] == 2)	cnt++;
-				}
-				if(cnt==ESIZE)	break;
-				
-				//큐에 넣기
-				for (int i = 0; i < exitPeople.length; i++) {
-					//큐에 이미 들어가거나 탈출한 사람은 pass
-					if(exitPeople[i]>=1)	continue;
-					
-					//이동중인 사람 : i
-					int min = Integer.MAX_VALUE;
-					//이 사람은 minIdx의 탈출구로 빠져나가!
-					int minIdx= -1;
-					
-					//비상구 돌면서 현재 상태에서 빠져나갈 수 있으면 큐에 계산해서 넣기
-					for (int j = 0; j < ESIZE; j++) {
-						if(moveArr[i][j] != answer)	continue;
-						////이부분부터 고민 시작임...
-						int cur = moveArr[i][j]+EWaitSize[j];
-						if(min>cur) {
-							min = cur;
-							minIdx = j;
-						}
-					}
-					
-					if(minIdx==-1)	continue;
-					
-					
-					
-				}
-				
-				++answer;
-			}
-			
-			System.out.println("#"+t+" "+answer);
-		}
-	}
-}
+### 4. Run Project
+1. Run CarrotMap Project in STS
+2. Enter url for your browser
+	```
+	http://localhost:포트번호/
+	```
+
+
+
+## ERD
+
+
+## UML diagrams
+
+
+```mermaid
+sequenceDiagram
+User ->> CarrotMap: 지역 검색
+CarrotMap ->> User: 주택&상권 정보 제공 
+Note right of User: 지역별 주택가격 분포  <br>로드뷰<br>
+
+Admin -->> CarrotMap:공지사항 등록
+User-->>CarrotMap: 커뮤니티 글 등록
+ User-->>CarrotMap: 댓글, 대댓글 작성
+
+User -->> CarrotMap: 주택 정보 등록
 ```
