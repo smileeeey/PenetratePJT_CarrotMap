@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="com.ssafy.carrotmap.repository.mapper.NoticeBoardCommentMapper">
+
+	<resultMap type="noticeBoardComment" id="noticeCommentMap">
+		<result column="no" property="no" />
+		<result column="comment" property="comment" />
+		<result column="notice_no" property="noticeNo" />
+		<result column="class_no" property="classNo" />
+		<result column="group_no" property="groupNo" />
+		<result column="member_id" property="memberId" />
+		<result column="img" property="memberImg" />
+		<result column="writedate" property="writeDate" />
+	</resultMap>
+
+	<select id="selectNoticeCommentByNoticeNo" parameterType="int"
+		resultMap="noticeCommentMap">
+		select
+		no,comment,notice_no,class_no,group_no,member_id,writedate
+		from noticeboard_comment 
+<!-- 		inner join member on noticeboard_comment.member_id = member.id -->
+		where notice_no = #{no}
+		order by group_no desc,class_no,no
+	</select>
+
+
+	<insert id="insertNoticeBoardComment" parameterType="noticeBoardComment">
+		INSERT into noticeboard_comment 
+		( comment ,   notice_no ,   class_no ,   group_no ,   member_id ) 
+		values(#{comment},#{noticeNo},#{classNo},#{groupNo},#{memberId})
+	</insert>
+	
+	
+	<!-- <update id="increaseViewCnt" parameterType="int"> -->
+	<!-- update noticeboard -->
+	<!-- set view_cnt = view_cnt+1 -->
+	<!-- where no = #{no} -->
+	<!-- </update> -->
+
+	<!-- <select id="selectByNo" parameterType="int" -->
+	<!-- resultType="noticeBoard"> -->
+	<!-- select * -->
+	<!-- from noticeboard -->
+	<!-- where no = #{no} -->
+	<!-- </select> -->
+
+	<!-- <select id="selectCategoryByNo" parameterType="int" -->
+	<!-- resultType="String"> -->
+	<!-- select category -->
+	<!-- from noticeboard_category -->
+	<!-- where noticeboard_no = #{no} -->
+	<!-- </select> -->
+
+	<!-- <select id="selectBoardList" parameterType="boardSearchType" -->
+	<!-- resultType="noticeBoard"> -->
+	<!-- select * -->
+	<!-- from noticeboard -->
+	<!-- <if test="searchCondition != null "> -->
+	<!-- where '#{searchCondition}' like '%'#{searchWord}'%' -->
+	<!-- </if> -->
+	<!-- limit #{startIndex}, #{cntPerPage} -->
+	<!-- </select> -->
+
+	<!-- <select id="selectBoardListCnt" resultType="int"> -->
+	<!-- select count(*) -->
+	<!-- from noticeboard -->
+	<!-- </select> -->
+
+</mapper>

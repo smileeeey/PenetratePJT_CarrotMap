@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssafy.carrotmap.repository.mapper.UserBoardMapper">
+
+
+	<select id="selectByNo" parameterType="int"
+		resultType="userBoard">
+		select *
+		from userboard
+		where no = #{no}
+	</select>
+
+
+	<select id="selectBoardListCnt" resultType="int">
+		select count(*)
+		from
+		userboard
+	</select>
+
+
+	<select id="selectBoardList" parameterType="boardSearchType"
+		resultType="userBoard">
+		select *
+		from userboard
+		<if test="searchCondition != null ">
+			where title like CONCAT('%',#{searchWord},'%') or content LIKE CONCAT( '%',#{searchWord},'%')
+		</if>
+		order by importance desc , no desc
+		limit #{startIndex}, #{cntPerPage}
+	</select>
+
+	<insert id="insert" parameterType="userBoard">
+		insert into
+		userboard(title,user_id,content,importance)
+		values
+		(#{title},#{userId},#{content},#{importance})
+	</insert>
+
+	<update id="update" parameterType="userBoard">
+		update
+		userboard
+		set
+		title=#{title},
+		content=#{content},
+		importance=#{importance},
+		update_time = #{updateTime},
+		where no = #{no}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from userboard
+		where no
+		= #{no}
+	</delete>
+
+	<update id="increaseViewCnt" parameterType="int">
+		update userboard
+		set
+		view_cnt = view_cnt+1
+		where no = #{no}
+	</update>
+
+	<select id="selectUserBoardLikeCnt" resultType="int">
+		select count(*)
+		from
+		userboard_like
+		where userboard_no = #{no}
+	</select>
+	
+	<select id="selectUserBoardDisLikeCnt" resultType="int">
+		select count(*)
+		from
+		userboard_dislike
+		where userboard_no=#{no}
+	</select>
+	
+	<select id="selectLike" parameterType="like" resultType="int">
+		select count(*)
+		from
+		userboard_like
+		where userboard_no=#{no} and user_id=#{id}
+	</select>
+	
+	<insert id="insertLike" parameterType="like">
+		insert into
+		userboard_like(userboard_no,user_id)
+		values
+		(#{no},#{id})
+	</insert>
+	
+	<delete id="deleteLiked" parameterType="like">
+		delete from userboard_like
+		where userboard_no=#{no} and user_id=#{id}
+	</delete>
+	
+	
+
+	<!-- <update id="increaseLikeCnt" parameterType="int"> -->
+	<!-- update userboard -->
+	<!-- set like_cnt = like_cnt+1 -->
+	<!-- where no = #{no} -->
+	<!-- </update> -->
+
+	<!-- <update id="increaseDislikeCnt" parameterType="int"> -->
+	<!-- update userboard -->
+	<!-- set dislike_cnt = dislike_cnt+1 -->
+	<!-- where no = #{no} -->
+	<!-- </update> -->
+
+
+	<!-- <update id="decreaseLikeCnt" parameterType="int"> -->
+	<!-- update userboard -->
+	<!-- set like_cnt = like_cnt-1 -->
+	<!-- where no = #{no} -->
+	<!-- </update> -->
+
+	<!-- <update id="decreaseDislikeCnt" parameterType="int"> -->
+	<!-- update userboard -->
+	<!-- set dislike_cnt = dislike_cnt-1 -->
+	<!-- where no = #{no} -->
+	<!-- </update> -->
+
+
+	<!-- 사용 안함 selectBoardList 대체 -->
+	<!-- <select id="selectUserBoard" resultType="userBoard"> -->
+	<!-- select -->
+	<!-- * -->
+	<!-- from userboard -->
+	<!-- order by no -->
+	<!-- </select> -->
+</mapper>

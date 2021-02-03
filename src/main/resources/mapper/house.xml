@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.carrotmap.repository.mapper.HouseMapper">
+	
+
+	
+	<insert id="regist" parameterType="house">
+		insert into
+		house(dong,AptName,code,dealAmount,buildYear,dealYear,dealMonth,dealDay,area,floor,jibun,type,rentMoney)
+		values (#{dong},#{AptName},#{code},#{dealAmount},#{buildYear},year(now()),month(now()),dayofmonth(now()),#{area},#{floor},#{jibun},#{type},#{rentMoney})
+	</insert>
+
+	<insert id="insertHouseFile" parameterType="houseFile">
+		insert into house_file(NO,file_path,org_file_name,system_file_name,file_size,file_type)
+		values ((SELECT no from house ORDER BY NO DESC LIMIT 1  ),#{filePath},#{orgFileName},#{systemName},#{fileSize},#{fileType})
+	</insert>
+	
+</mapper>
