@@ -92,4 +92,4 @@ CarrotMap은 주택 거래를 위한 웹서비스 입니다. 카카오 맵 API�
 
 ## UML diagrams
 
-![URD](./img/urd.PNG)
+![URD](./upload/urd.PNG)
