@@ -52,21 +52,22 @@ CarrotMap은 주택 거래를 위한 웹서비스 입니다. 카카오 맵 API�
 
 ## 시작하기
 아래의 방법을 따르면 프로젝트를 실행시킬 수 있습니다.
-
+<br><br>
 
 ### 시작하기에앞서
 기본 개발환경을 세팅해주세요!
-
+<br><br>
 ### 1. Git Clone
+<br>
  ```
  $ git clone https://github.com/sumin416/PenetratePJT_CarrotMap.git 
  ```
-
+<br>
 ### 2. Import Project 
 
  - [x] 소스코드를 STS에서 import 해주세요!
 
-
+<br>
 
 ### 3. Customizing
 
@@ -75,7 +76,7 @@ CarrotMap은 주택 거래를 위한 웹서비스 입니다. 카카오 맵 API�
  - [x] 데이터베이스  구축
  [sql 파일 다운로드]()
  
- 
+ <br>
 
 	
 ### 4. Run Project
@@ -84,12 +85,12 @@ CarrotMap은 주택 거래를 위한 웹서비스 입니다. 카카오 맵 API�
 	```
 	http://localhost:포트번호/
 	```
+<br>
 
-
-
+<br><br>
 ## ERD
 
-
+<br><br>
 ## UML diagrams
 
 ![URD](./upload/urd.PNG)
