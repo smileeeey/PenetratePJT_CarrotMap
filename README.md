@@ -40,13 +40,21 @@ CarrotMap은 주택 거래를 위한 웹서비스 입니다. 카카오 맵 API�
  
 
 ## 목차
-여기에 링크넣고싶은데!!
+[#0-1. 시작하기](#시작하기)
+
+[#0-2. 시작하기에 앞서](#시작하기에앞서)
+
+[#1. ERD](#ERD)
+
+[#2. UML diagrams](#UMLdiagrams)
+
+<br><br><br>
 
 ## 시작하기
 아래의 방법을 따르면 프로젝트를 실행시킬 수 있습니다.
 
 
-### 시작하기에 앞서
+### 시작하기에앞서
 기본 개발환경을 세팅해주세요!
 
 ### 1. Git Clone
@@ -84,16 +92,4 @@ CarrotMap은 주택 거래를 위한 웹서비스 입니다. 카카오 맵 API�
 
 ## UML diagrams
 
-
-```mermaid
-sequenceDiagram
-User ->> CarrotMap: 지역 검색
-CarrotMap ->> User: 주택&상권 정보 제공 
-Note right of User: 지역별 주택가격 분포  <br>로드뷰<br>
-
-Admin -->> CarrotMap:공지사항 등록
-User-->>CarrotMap: 커뮤니티 글 등록
- User-->>CarrotMap: 댓글, 대댓글 작성
-
-User -->> CarrotMap: 주택 정보 등록
-```
+![URD](./img/urd.PNG)
